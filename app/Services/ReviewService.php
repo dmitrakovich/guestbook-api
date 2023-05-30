@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Events\ReplyCreated;
+use App\Events\ReviewCreated;
 use App\Models\Reply;
 use App\Models\Review;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -20,6 +22,8 @@ class ReviewService
     {
         $review = Review::create($data);
 
+        event(new ReviewCreated($review));
+
         return $review;
     }
 
@@ -29,6 +33,8 @@ class ReviewService
     public function createReply(Review $review, array $data): Reply
     {
         $reply = $review->replies()->create($data);
+
+        event(new ReplyCreated($review->user, $reply));
 
         return $reply;
     }

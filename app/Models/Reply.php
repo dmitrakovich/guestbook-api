@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations;
  * @property string $content
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ * @property \App\Models\User $user
  * @property \App\Models\Review $review
  */
 class Reply extends Model
