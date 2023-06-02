@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReviewRequest;
+use App\Http\Resources\ReviewResource;
 use App\Services\ReviewService;
-use Illuminate\Http\JsonResponse;
 
 class ReviewController extends Controller
 {
@@ -23,16 +23,16 @@ class ReviewController extends Controller
     {
         $reviews = $this->reviewService->getPaginatedReviewsWithReplies();
 
-        return response()->json($reviews);
+        return ReviewResource::collection($reviews);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ReviewRequest $request): JsonResponse
+    public function store(ReviewRequest $request): ReviewResource
     {
         $review = $this->reviewService->createReview($request->validated());
 
-        return response()->json($review, 201);
+        return new ReviewResource($review);
     }
 }
